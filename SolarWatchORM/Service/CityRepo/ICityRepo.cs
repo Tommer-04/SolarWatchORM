@@ -6,5 +6,11 @@ namespace SolarWatchORM.Service.CityRepo
     {
         Task<City?> SearchByName(string name);
         Task AddNewCity(City city);
+
+        Task<bool> UpdateCity(int id, City updatedCity);
+
+        Task<bool> DeleteCity(int id);
+
+        Task<City?> GetCityById(int id);
     }
 }
