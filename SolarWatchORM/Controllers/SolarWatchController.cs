@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SolarWatchORM.Data;
@@ -11,7 +12,8 @@ using SolarWatchORM.Service.SunRepo;
 namespace SolarWatchORM.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
+    [Authorize(Roles = "Admin")]
     public class SolarWatchController : ControllerBase
     {
 
@@ -33,7 +35,7 @@ namespace SolarWatchORM.Controllers
 
 
 
-        [HttpGet("/getData")]
+        [HttpGet("getData")]
         public async Task<IActionResult> GetSunData(string CityName, DateOnly Date)
         {
             City? city = await _cityRepo.SearchByName(CityName);

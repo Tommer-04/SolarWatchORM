@@ -2,10 +2,10 @@
 
 #nullable disable
 
-namespace SolarWatchORM.Migrations.Identity
+namespace SolarWatchORM.Migrations
 {
     /// <inheritdoc />
-    public partial class AddRoles : Migration
+    public partial class InitialCreate2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

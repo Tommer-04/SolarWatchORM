@@ -9,6 +9,7 @@ namespace SolarWatchORM.Data
         public IdentityContext(DbContextOptions<IdentityContext> options)
             : base(options)
         {
+
         }
 
     }

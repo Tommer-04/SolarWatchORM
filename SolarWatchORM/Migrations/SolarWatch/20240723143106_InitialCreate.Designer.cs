@@ -9,18 +9,18 @@ using SolarWatchORM.Data;
 
 #nullable disable
 
-namespace SolarWatchORM.Migrations
+namespace SolarWatchORM.Migrations.SolarWatch
 {
     [DbContext(typeof(SolarWatchContext))]
-    [Migration("20240720183037_NullableModifications")]
-    partial class NullableModifications
+    [Migration("20240723143106_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.6")
+                .HasAnnotation("ProductVersion", "8.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -56,35 +56,6 @@ namespace SolarWatchORM.Migrations
                         .IsUnique();
 
                     b.ToTable("Cities");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Country = "England",
-                            Latitude = 51.509864999999998,
-                            Longitude = -0.118092,
-                            Name = "London",
-                            State = "London"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Country = "Hungary",
-                            Latitude = 47.497912999999997,
-                            Longitude = 19.040236,
-                            Name = "Budapest",
-                            State = "Pest"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Country = "France",
-                            Latitude = 48.864716000000001,
-                            Longitude = 2.3490139999999999,
-                            Name = "Paris",
-                            State = "Paris"
-                        });
                 });
 
             modelBuilder.Entity("SolarWatchORM.Data.SunData.Sun", b =>
@@ -109,33 +80,15 @@ namespace SolarWatchORM.Migrations
                     b.HasIndex("CityId");
 
                     b.ToTable("SunRecords");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CityId = 1,
-                            Sunrise = new DateTime(2024, 7, 18, 5, 30, 0, 0, DateTimeKind.Unspecified),
-                            Sunset = new DateTime(2024, 7, 18, 20, 15, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CityId = 2,
-                            Sunrise = new DateTime(2024, 7, 18, 5, 45, 0, 0, DateTimeKind.Unspecified),
-                            Sunset = new DateTime(2024, 7, 18, 20, 30, 0, 0, DateTimeKind.Unspecified)
-                        });
                 });
 
             modelBuilder.Entity("SolarWatchORM.Data.SunData.Sun", b =>
                 {
-                    b.HasOne("SolarWatchORM.Data.CityData.City", "City")
+                    b.HasOne("SolarWatchORM.Data.CityData.City", null)
                         .WithMany("SunRecords")
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("City");
                 });
 
             modelBuilder.Entity("SolarWatchORM.Data.CityData.City", b =>

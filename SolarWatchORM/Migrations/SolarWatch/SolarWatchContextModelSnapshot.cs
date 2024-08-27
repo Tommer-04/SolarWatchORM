@@ -3,20 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SolarWatchORM.Data;
 
 #nullable disable
 
-namespace SolarWatchORM.Migrations
+namespace SolarWatchORM.Migrations.SolarWatch
 {
     [DbContext(typeof(SolarWatchContext))]
-    [Migration("20240722005931_AddRoles")]
-    partial class AddRoles
+    partial class SolarWatchContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

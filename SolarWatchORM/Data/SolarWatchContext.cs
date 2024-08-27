@@ -11,16 +11,10 @@ namespace SolarWatchORM.Data
 
         private readonly IConfiguration _config;
 
-        public SolarWatchContext(IConfiguration config)
+        public SolarWatchContext(DbContextOptions<SolarWatchContext> options)
+            : base(options)
         {
-            _config = config;
-        }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(_config.GetConnectionString("DefaultConnection"));
-
-            base.OnConfiguring(optionsBuilder);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

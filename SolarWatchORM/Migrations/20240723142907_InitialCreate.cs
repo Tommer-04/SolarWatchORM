@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace SolarWatchORM.Migrations.Identity
+namespace SolarWatchORM.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration

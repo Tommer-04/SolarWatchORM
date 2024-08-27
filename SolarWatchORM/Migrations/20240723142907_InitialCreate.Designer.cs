@@ -9,11 +9,11 @@ using SolarWatchORM.Data;
 
 #nullable disable
 
-namespace SolarWatchORM.Migrations.Identity
+namespace SolarWatchORM.Migrations
 {
     [DbContext(typeof(IdentityContext))]
-    [Migration("20240722005058_AddRoles")]
-    partial class AddRoles
+    [Migration("20240723142907_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

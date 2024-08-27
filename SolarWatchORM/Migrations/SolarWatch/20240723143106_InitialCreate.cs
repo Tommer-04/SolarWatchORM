@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace SolarWatchORM.Migrations
+namespace SolarWatchORM.Migrations.SolarWatch
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration
@@ -17,10 +17,10 @@ namespace SolarWatchORM.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Longitude = table.Column<int>(type: "int", nullable: false),
-                    Latitude = table.Column<int>(type: "int", nullable: false),
-                    State = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Longitude = table.Column<double>(type: "float", nullable: false),
+                    Latitude = table.Column<double>(type: "float", nullable: false),
+                    State = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -29,7 +29,7 @@ namespace SolarWatchORM.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Suns",
+                name: "SunRecords",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -40,9 +40,9 @@ namespace SolarWatchORM.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Suns", x => x.Id);
+                    table.PrimaryKey("PK_SunRecords", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Suns_Cities_CityId",
+                        name: "FK_SunRecords_Cities_CityId",
                         column: x => x.CityId,
                         principalTable: "Cities",
                         principalColumn: "Id",
@@ -50,8 +50,14 @@ namespace SolarWatchORM.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Suns_CityId",
-                table: "Suns",
+                name: "IX_Cities_Name",
+                table: "Cities",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SunRecords_CityId",
+                table: "SunRecords",
                 column: "CityId");
         }
 
@@ -59,7 +65,7 @@ namespace SolarWatchORM.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Suns");
+                name: "SunRecords");
 
             migrationBuilder.DropTable(
                 name: "Cities");

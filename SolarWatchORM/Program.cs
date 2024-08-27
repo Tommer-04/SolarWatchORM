@@ -14,6 +14,7 @@ using System;
 using System.Text;
 using SolarWatchORM.Configurations;
 using SolarWatchORM.Seeding;
+using Microsoft.AspNetCore.CookiePolicy;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -68,7 +69,23 @@ builder.Services.AddAuthentication(options =>
         ValidAudience = jwtSettings["ValidAudience"],
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(issuerSigningKey))
     };
-});
+    options.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
+        {
+            context.Token = context.Request.Cookies["jwt"];
+            return Task.CompletedTask;
+        }
+    };
+})
+.AddCookie(options =>
+ {
+     options.Cookie.HttpOnly = true;
+     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+     options.Cookie.SameSite = SameSiteMode.None;
+     options.Cookie.Name = "jwt";
+     options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+ });
 
 builder.Services.AddScoped<JwtTokenHelper>();
 
@@ -76,11 +93,17 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
+    var dbContext = scope.ServiceProvider.GetRequiredService<SolarWatchContext>();
+    var userContext = scope.ServiceProvider.GetRequiredService<IdentityContext>();
+
+    dbContext.Database.Migrate();
+
+    userContext.Database.Migrate();
+
     var services = scope.ServiceProvider;
     await SeedData.Initialize(services);
 }
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -95,5 +118,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }
 
 

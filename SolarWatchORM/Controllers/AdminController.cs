@@ -7,7 +7,7 @@ namespace SolarWatchORM.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,User")]
     public class CitiesController : ControllerBase
     {
         private readonly ICityRepo _cityRepo;
